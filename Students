@@ -2,6 +2,6 @@ package oop_lab;
 
 public class Students {
 		Students(){
-			System.out.println("syed sohaib hassan khan");
+			System.out.println("syed sohaib hassan khan khan");
 		}
 }
