@@ -1,0 +1,7 @@
+package oop_lab;
+
+public class Students {
+		Students(){
+			System.out.println("");
+		}
+}
