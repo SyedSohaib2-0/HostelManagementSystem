@@ -1,7 +1,0 @@
-package oop_lab;
-
-public class Students {
-		Students(){
-			System.out.println("syed sohaib hassan i am a student of data science dept");
-		}
-}
