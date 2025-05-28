@@ -1,0 +1,124 @@
+package com.hostel.controller;
+
+import com.hostel.database.DatabaseConnection;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import java.sql.*;
+import java.time.LocalDate;
+
+public class StudentController {
+
+    @FXML private TextField regNoField;
+    @FXML private TextField nameField;
+    @FXML private ChoiceBox<String> genderChoice;
+    @FXML private TextField emailField;
+    @FXML private TextField phoneField;
+    @FXML private TextField courseField;
+    @FXML private DatePicker joinDatePicker;
+    @FXML private DatePicker endDatePicker;
+
+    @FXML private TextField searchRegNoField;
+    @FXML private TextArea studentDetailsArea;
+
+    private final Connection conn = DatabaseConnection.getConnection();
+
+    public void handleAddStudent() {
+        String sql = "INSERT INTO students (registration_number, full_name, gender, email, phone, course, join_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, regNoField.getText());
+            pstmt.setString(2, nameField.getText());
+            pstmt.setString(3, genderChoice.getValue());
+            pstmt.setString(4, emailField.getText());
+            pstmt.setString(5, phoneField.getText());
+            pstmt.setString(6, courseField.getText());
+            pstmt.setDate(7, Date.valueOf(joinDatePicker.getValue()));
+            pstmt.setDate(8, Date.valueOf(endDatePicker.getValue()));
+            pstmt.executeUpdate();
+            showAlert(Alert.AlertType.INFORMATION, "Student Added Successfully!");
+            clearFields();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error Adding Student: " + e.getMessage());
+        }
+    }
+
+    public void handleUpdateStudent() {
+        String sql = "UPDATE students SET full_name=?, gender=?, email=?, phone=?, course=?, join_date=?, end_date=? WHERE registration_number=?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nameField.getText());
+            pstmt.setString(2, genderChoice.getValue());
+            pstmt.setString(3, emailField.getText());
+            pstmt.setString(4, phoneField.getText());
+            pstmt.setString(5, courseField.getText());
+            pstmt.setDate(6, Date.valueOf(joinDatePicker.getValue()));
+            pstmt.setDate(7, Date.valueOf(endDatePicker.getValue()));
+            pstmt.setString(8, regNoField.getText());
+            int rows = pstmt.executeUpdate();
+            if (rows > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Student Updated Successfully!");
+            } else {
+                showAlert(Alert.AlertType.WARNING, "No student found with this Registration Number.");
+            }
+            clearFields();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error Updating Student: " + e.getMessage());
+        }
+    }
+
+    public void handleDeleteStudent() {
+        String sql = "DELETE FROM students WHERE registration_number=?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, regNoField.getText());
+            int rows = pstmt.executeUpdate();
+            if (rows > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Student Deleted Successfully!");
+            } else {
+                showAlert(Alert.AlertType.WARNING, "No student found with this Registration Number.");
+            }
+            clearFields();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error Deleting Student: " + e.getMessage());
+        }
+    }
+
+    public void handleFetchStudent() {
+        String sql = "SELECT * FROM students WHERE registration_number=?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, searchRegNoField.getText());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Registration No: ").append(rs.getString("registration_number")).append("\n");
+                sb.append("Name: ").append(rs.getString("full_name")).append("\n");
+                sb.append("Gender: ").append(rs.getString("gender")).append("\n");
+                sb.append("Email: ").append(rs.getString("email")).append("\n");
+                sb.append("Phone: ").append(rs.getString("phone")).append("\n");
+                sb.append("Course: ").append(rs.getString("course")).append("\n");
+                sb.append("Join Date: ").append(rs.getDate("join_date")).append("\n");
+                sb.append("End Date: ").append(rs.getDate("end_date"));
+                studentDetailsArea.setText(sb.toString());
+            } else {
+                studentDetailsArea.setText("No student found with this Registration Number.");
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error Fetching Student: " + e.getMessage());
+        }
+    }
+
+    private void clearFields() {
+        regNoField.clear();
+        nameField.clear();
+        genderChoice.setValue(null);
+        emailField.clear();
+        phoneField.clear();
+        courseField.clear();
+        joinDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+    }
+
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
