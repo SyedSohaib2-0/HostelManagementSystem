@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.hostel.controller.StaffController"
+            prefWidth="800" prefHeight="550">
+
+    <!-- Title -->
+    <VBox spacing="10" layoutX="30" layoutY="20">
+        <Label text="Staff Management">
+            <font>
+                <Font name="Segoe UI Bold" size="18"/>
+            </font>
+        </Label>
+
+        <!-- Input Fields -->
+        <HBox spacing="10">
+            <TextField fx:id="nameField" promptText="Name" prefWidth="150"/>
+            <TextField fx:id="roleField" promptText="Role" prefWidth="150"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <TextField fx:id="phoneField" promptText="Phone" prefWidth="150"/>
+            <TextField fx:id="emailField" promptText="Email" prefWidth="150"/>
+        </HBox>
+
+        <!-- Action Buttons -->
+        <HBox spacing="10">
+            <Button fx:id="addButton" text="Add Staff" onAction="#handleAddStaff" styleClass="button"/>
+            <Button text="Delete Staff" onAction="#handleDeleteStaff" styleClass="button"/>
+            <Button text="Back" onAction="#handleBack" styleClass="button"/>
+        </HBox>
+    </VBox>
+
+    <!-- Staff Table -->
+    <TableView fx:id="staffTable" layoutX="30" layoutY="220" prefWidth="740" prefHeight="280">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="180"/>
+            <TableColumn fx:id="roleColumn" text="Role" prefWidth="180"/>
+            <TableColumn fx:id="phoneColumn" text="Phone" prefWidth="180"/>
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+</AnchorPane>

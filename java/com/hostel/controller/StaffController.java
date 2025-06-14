@@ -158,12 +158,17 @@ public class StaffController {
     @FXML
     public void handleBack(javafx.event.ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/hostel/view/MainDashboard.fxml"));
+            // Correct path assuming src/main/resources/fxml/MainDashboard.fxml
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainDashboard.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("Main Dashboard");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load Main Dashboard.");
+            alert.showAndWait();
         }
     }
+
 }

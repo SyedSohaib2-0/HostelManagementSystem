@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hostel.controller.MainDashboardController"
+      spacing="12" alignment="CENTER">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Hostel Management System" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <Button text="Manage Students" onAction="#openStudentModule"/>
+    <Button text="Manage Staff" onAction="#openStaffModule"/>
+    <Button text="Manage Rooms" onAction="#openRoomModule"/>
+    <Button text="Manage Allocations" onAction="#openAllocationModule"/>
+    <Button text="Manage Payments" onAction="#openPaymentModule"/>
+    <Button text="Maintenance Reports" onAction="#openMaintenanceModule"/>
+</VBox>

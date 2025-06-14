@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.hostel.controller.AllocationsController">
+    <center>
+          <VBox spacing="12" alignment="CENTER">
+      <padding>
+          <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+      </padding>
+  
+            <Label text="Room Allocations" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="10">
+                <TextField fx:id="studentIdField" promptText="Student ID"/>
+                <TextField fx:id="roomIdField" promptText="Room ID"/>
+                <DatePicker fx:id="allocationDatePicker"/>
+            </HBox>
+
+            <Button text="Allocate Room" onAction="#handleAllocateRoom"/>
+
+            <Separator/>
+
+            <TextField fx:id="searchStudentIdField" promptText="Search Allocations by Student ID" maxWidth="200"/>
+            <Button text="Fetch Allocations" onAction="#handleFetchAllocations"/>
+
+            <TextArea fx:id="allocationDetailsArea" prefRowCount="8" editable="false"/>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+    <Button text="Back" onAction="#handleBack"/>
+</HBox>
+            
+        </VBox>
+    </center>
+</BorderPane>
